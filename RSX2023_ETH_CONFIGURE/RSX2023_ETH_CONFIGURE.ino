@@ -19,7 +19,9 @@ void loop()
   eth_send_message(DEBUG, message);
 
   if (DEBUG)
+  {
     Serial.println("Message: " + eth_receive_message(DEBUG));
+    eth_debug();
+  }
   delay(100);
-  eth_debug();
 }

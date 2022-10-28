@@ -26,7 +26,7 @@ long unsigned int CH9121_BAUD_RATE = 9600;                // BAUD RATE
 // unsigned char CH9121_Random_port = 0;                        //Random port    1:on   0:off
 // short unsigned int CH9121_PORT1 = 4369;                      // LOCAL PORT1
 // short unsigned int CH9121_TARGET_PORT = 4369;                // TARGET PORT
-// long unsigned int CH9121_BAUD_RATE = 9600;                 // BAUD RATE
+// long unsigned int CH9121_BAUD_RATE = 9600;                   // BAUD RATE
 
 #define Mode1 0x10               // Port 1: Setup Mode   0x00:TCP Server 0x01:TCP Client 0x02:UDP Server 0x03:UDP Client
 #define LOCAL_IP 0x11            // Local IP
@@ -183,8 +183,7 @@ void eth_begin(bool debug)
   digitalWrite(RESET_PIN, HIGH);
   if (debug)
     Serial.println("Ethernet setup begin.");
-  SERIAL_ETH.begin(CH9121_BAUD_RATE);
-  SERIAL_ETH.setTimeout(10);
+  SERIAL_ETH.begin(9600);
 
   pinMode(CFG_PIN, OUTPUT);
   digitalWrite(CFG_PIN, LOW);
@@ -254,17 +253,11 @@ String eth_receive_message(bool debug)
 {
   if (debug)
     Serial.println("Begin receive message.");
-  String message = "TEST";
-  if (eth_available() == 0)
-  {
-    if (debug)
-      Serial.println("Nothing to read.");
-    message = "";
-  }
+  String message = "";
+  if ((eth_available() == 0) & debug)
+    Serial.println("Nothing to read.");
   else
-  {
     message = SERIAL_ETH.readString();
-  }
   if (debug)
     Serial.println("Recieve message complete.");
   return message;
@@ -341,5 +334,4 @@ void eth_debug()
   temp = (bytes[3] << 24) + (bytes[2] << 16) + (bytes[1] << 8) + bytes[0];
   Serial.println(String(temp));
   digitalWrite(CFG_PIN, HIGH);
-  delay(1000);
 }
