@@ -6,22 +6,22 @@ const bool DEBUG = true;
 
 void setup()
 {
-  if (DEBUG)
-    Serial.begin(BAUD_RATE);
+  if (DEBUG)                  //Sender & Reciever
+    Serial.begin(BAUD_RATE);  //Sender & Reciever
 
-  eth_begin(DEBUG);
-  InitAllSensors(DEBUG);
+  eth_begin(DEBUG);           //Sender & Reciever
+  InitAllSensors(DEBUG);      //Sender Only
 }
 
 void loop()
 {
-  String message = ReadAllSensors();
-  eth_send_message(DEBUG, message);
-  Serial.println("\n---- SENT MESSAGE START ----\n" + message + "\n---- SENT MESSAGE END ----");
+  String message = ReadAllSensors();                                                              //Sender Only
+  eth_send_message(DEBUG, message);                                                               //Sender Only
+  Serial.println("\n---- SENT MESSAGE START ----\n" + message + "\n---- SENT MESSAGE END ----");  //Sender Only
 
-  //Serial.println("\n---- RECIEVED MESSAGE START ----\n" + eth_receive_message(DEBUG) + "\n---- RECIEVED MESSAGE END ----");
-  //if (DEBUG)
-  //  eth_debug();
+  //Serial.println("\n---- RECIEVED MESSAGE START ----\n" + eth_receive_message(DEBUG) + "\n---- RECIEVED MESSAGE END ----"); //Reciever Only
+  //if (DEBUG)                                                                                                                //Reciever Only
+  //  eth_debug();                                                                                                            //Reciever Only
 
-  delay(1000);
+  delay(1000);    //Sender & Reciever
 }

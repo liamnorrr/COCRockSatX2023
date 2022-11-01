@@ -6,7 +6,7 @@ const int CFG_PIN = 14;
 const int RESET_PIN = 15;
 const int RSTI_PIN = 16;
 
-// Transmit Data
+// Sender Only
 unsigned char CH9121_Mode = 3;                            // 0:TCP_SERVER  1:TCP_CLIENT 2:UDP_SERVER 3:UDP_CLIENT
 unsigned char CH9121_LOCAL_IP[4] = {192, 168, 1, 100};    // LOCAL IP
 unsigned char CH9121_GATEWAY[4] = {169, 254, 88, 1};      // GATEWAY
@@ -17,7 +17,7 @@ short unsigned int CH9121_PORT1 = 4369;                   // LOCAL PORT1
 short unsigned int CH9121_TARGET_PORT = 4369;             // TARGET PORT
 long unsigned int CH9121_BAUD_RATE = 9600;                // BAUD RATE
 
-// Receive Data
+// Receive Only
 /*unsigned char CH9121_Mode = 2;                               //0:TCP_SERVER  1:TCP_CLIENT 2:UDP_SERVER 3:UDP_CLIENT
 unsigned char CH9121_LOCAL_IP[4] = { 192, 168, 1, 200 };     // LOCAL IP
 unsigned char CH9121_GATEWAY[4] = { 169, 254, 88, 1 };       // GATEWAY
