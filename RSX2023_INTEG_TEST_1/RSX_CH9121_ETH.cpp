@@ -26,7 +26,8 @@ unsigned char CH9121_TARGET_IP[4] = { 192, 168, 1, 100 };    // TARGET_IP
 unsigned char CH9121_Random_port = 0;                        //Random port    1:on   0:off
 short unsigned int CH9121_PORT1 = 4369;                      // LOCAL PORT1
 short unsigned int CH9121_TARGET_PORT = 4369;                // TARGET PORT
-long unsigned int CH9121_BAUD_RATE = 9600;*/                   // BAUD RATE
+long unsigned int CH9121_BAUD_RATE = 9600;*/
+// BAUD RATE
 
 #define Mode1 0x10               // Port 1: Setup Mode   0x00:TCP Server 0x01:TCP Client 0x02:UDP Server 0x03:UDP Client
 #define LOCAL_IP 0x11            // Local IP
@@ -183,6 +184,7 @@ void eth_begin(bool debug)
   digitalWrite(RESET_PIN, HIGH);
   if (debug)
     Serial.println("Ethernet setup begin.");
+  SERIAL_ETH.flush();
   SERIAL_ETH.begin(9600);
 
   pinMode(CFG_PIN, OUTPUT);
@@ -228,9 +230,9 @@ void eth_begin(bool debug)
   CH9121_Eed();
 
   delay(100);
-  char trash[20];
-  SERIAL_ETH.readBytes(trash, 20);
   digitalWrite(CFG_PIN, HIGH);
+  SERIAL_ETH.flush();
+  SERIAL_ETH.begin(CH9121_BAUD_RATE);
   if (debug)
     Serial.println("Ethernet setup completed.");
 }
@@ -282,6 +284,8 @@ void send_command(int command)
 
 void eth_debug()
 {
+  SERIAL_ETH.flush();
+  SERIAL_ETH.begin(9600);
   byte bytes[4];
   digitalWrite(CFG_PIN, LOW);
   send_command(0x60); // Get Working Mode
@@ -334,4 +338,6 @@ void eth_debug()
   temp = (bytes[3] << 24) + (bytes[2] << 16) + (bytes[1] << 8) + bytes[0];
   Serial.println(String(temp));
   digitalWrite(CFG_PIN, HIGH);
+  SERIAL_ETH.flush();
+  SERIAL_ETH.begin(CH9121_BAUD_RATE);
 }
